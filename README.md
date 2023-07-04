@@ -7,10 +7,10 @@ A tournament of competing Prisoner's Dilemma strategies, for the attendees of AM
 The game is iterated Prisoner's Dilemma, with an uncertain length to prevent a collapse to the static game Nash equilibrium.
 
 The payoff matrix is as follows:
-|           | Cooperate | Defect |
-|:---------:|:---------:|:------:|
-| Cooperate | R,R       | S,T    |
-| Defect    | T,S       | P,P    |
+|               | Cooperate | Defect |
+|:-------------:|:---------:|:------:|
+| **Cooperate** | R,R       | S,T    |
+| **Defect**    | T,S       | P,P    |
 
 where T > R > P > S.
 Further, 2R > T + S (both players always cooperating is better than alternating cooperating and defecting.
@@ -22,10 +22,10 @@ Algorithms will also be given the values or T, R, P, S, and 𝛿, in case they w
 By default, the game will run with T = 5, R = 3, P = 1, S = 0 and 𝛿 = 0.99.
 That is, the payoff matrix will be as follows:
 The payoff matrix is as follows:
-|           | Cooperate | Defect |
-|:---------:|:---------:|:------:|
-| Cooperate | 3,3       | 0,5    |
-| Defect    | 5,0       | 1,1    |
+|               | Cooperate | Defect |
+|:-------------:|:---------:|:------:|
+| **Cooperate** | 3,3       | 0,5    |
+| **Defect**    | 5,0       | 1,1    |
 
 and the game will run for an average of 100 iterations.
 
