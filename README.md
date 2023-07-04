@@ -81,3 +81,15 @@ The seven arguments, in order, are as follows:
 	The probability of playing another game after this one.
 
 Your function is under no obligation to make use of all, or even any, of these arguments, but they must all be in the function signature.
+
+### Testing Your Strategy
+
+If you want to test your strategy before submitting it (always highly recommended), you can use the provided `test.py` file.
+First, clone this repository, and put your strategy file in the `strategies` directory.
+Take note of the name of your file.
+Then, run `test.py`, passing it two arguments on the command line: the names of the files (without the `.py`) for the two strategies you want to run against one another.
+For example:
+```
+python3 test.py always_cooperate always_defect
+```
+You can pass it the same name twice if you want it to run the strategy against itself.
