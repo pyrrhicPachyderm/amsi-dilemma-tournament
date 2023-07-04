@@ -97,7 +97,7 @@ You can pass it the same name twice if you want it to run the strategy against i
 ### Notes
 
 Multiple submissions from the same person are very welcome!
-As are collaborations: a single submission worked on by multiple people.
+Collaboration is also welcome: feel free to put multiple names in the `owner` string.
 
 For this to work, some people are going to need to submit some nasty (as in, not nice) strategies: strategies that will defect without provocation.
 I know we've learned all about how nice strategies are great, but if everyone submits only nice strategies, everything will cooperate all the time, and we'll never see any changes in the population.
