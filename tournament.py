@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy
+import matplotlib.pyplot as plt
 from utils.load_strategies import load_strategies
 from utils.game import game
 from utils.repeat import proportion_rep
@@ -47,3 +48,13 @@ numpy.savetxt("results.csv",
 	header = ",".join(["\"generation\""] + [f"\"{strategy.name}\"" for strategy in strategies]),
 	comments = "",
 )
+
+#Show a plot of the results.
+for i in range(results.shape[1]):
+	plt.plot(generations, results[:,i], label = strategies[i].name)
+
+plt.xlim(min(generations), max(generations))
+plt.ylim(0, 1)
+plt.legend()
+
+plt.show()
