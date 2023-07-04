@@ -53,6 +53,9 @@ A strategy file consists of three parts:
 - An `owner` variable, giving your name, so we know who won.
 - A `play` function, containing your algorithm.
 
+Your strategy file may also contain anything else you wish: other variables, helper functions, imports, etc.
+In particular, you may wish to `import random` to implement a mixed strategy.
+
 #### The `play` Function
 
 The `play` function is the heart of your strategy file.
