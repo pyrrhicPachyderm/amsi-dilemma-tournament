@@ -53,6 +53,8 @@ numpy.savetxt("results.csv",
 for i in range(results.shape[1]):
 	plt.plot(generations, results[:,i], label = strategies[i].name)
 
+plt.xlabel("Generation")
+plt.ylabel("Proportion of population")
 plt.xlim(min(generations), max(generations))
 plt.ylim(0, 1)
 plt.legend()
