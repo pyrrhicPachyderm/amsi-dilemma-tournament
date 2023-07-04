@@ -21,3 +21,10 @@ def safe_round(xs):
 		results[residuals[i][0]] += 1
 	
 	return results
+
+#Takes a total count and a list of proportions.
+#Returns a list of indices with the number of repetitions of each index as close to the proportions as possible.
+def proportion_rep(n, proportions):
+	times = [n * p for p in proportions]
+	times = safe_round(times)
+	return rep(list(range(len(times))), times)
