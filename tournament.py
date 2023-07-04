@@ -29,7 +29,8 @@ def run_generation(population):
 	return payoffs
 
 #Run the evolution!
-for gen in range(1, parameters.num_gen+1):
+generations = range(parameters.num_gen+1)
+for gen in generations[1:]:
 	print(f"Generation {gen}")
 	
 	payoffs = run_generation(population)
@@ -40,7 +41,7 @@ for gen in range(1, parameters.num_gen+1):
 
 #Save the results to a csv.
 numpy.savetxt("results.csv",
-	numpy.column_stack((numpy.array(range(results.shape[0])), results)),
+	numpy.column_stack((numpy.array(generations), results)),
 	fmt = ["%d"] + ["%.10f"] * len(strategies),
 	delimiter = ",",
 	header = ",".join(["\"generation\""] + [f"\"{strategy.name}\"" for strategy in strategies]),
