@@ -20,8 +20,8 @@ def payoff(p1_move, p2_move):
 
 #Takes two strategies, and runs a game.
 #Returns the total payoff for both strategies.
-#Results are divided by the number of iterations, to control for variable game length.
-def game(strategy1, strategy2):
+#If normalise = True, results are divided by the number of iterations, to control for variable game length.
+def game(strategy1, strategy2, normalise = True, return_moves = False):
 	num_iter = 0
 	p1_moves = []
 	p2_moves = []
@@ -40,7 +40,11 @@ def game(strategy1, strategy2):
 		if random.random() >= parameters.delta:
 			break
 	
-	p1_payoff /= num_iter
-	p2_payoff /= num_iter
+	if normalise:
+		p1_payoff /= num_iter
+		p2_payoff /= num_iter
 	
-	return p1_payoff, p2_payoff
+	if return_moves:
+		return p1_payoff, p2_payoff, p1_moves, p2_moves
+	else:
+		return p1_payoff, p2_payoff
