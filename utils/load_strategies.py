@@ -8,12 +8,14 @@ def invalid_strategy(filename, message):
 	print(f"File {filename} does not contain a valid strategy: {message}.", file = sys.stderr)
 
 def load_strategies():
-	strategies = []
+	strategies = {}
 	for filename in os.listdir(strategies_dir):
 		if not os.path.isfile(os.path.join(strategies_dir, filename)):
 			continue
 		
-		strategy = importlib.import_module(strategies_dir + "." + os.path.splitext(filename)[0])
+		filestem = os.path.splitext(filename)[0]
+		
+		strategy = importlib.import_module(strategies_dir + "." + filestem)
 		
 		if not hasattr(strategy, "name"):
 			invalid_strategy(filename, "no strategy name (\"name\" variable)")
@@ -33,5 +35,5 @@ def load_strategies():
 			invalid_strategy(filename, "\"play\" is not a function")
 		#TODO: Check "play" has the correct signature
 		
-		strategies.append(strategy)
+		strategies[filestem] = strategy
 	return strategies
