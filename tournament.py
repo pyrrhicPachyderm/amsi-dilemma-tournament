@@ -9,35 +9,27 @@ import utils.parameters as parameters
 
 strategies = list(load_strategies().values())
 
-N = parameters.N_per * len(strategies)
-
 proportions = [1 / len(strategies)] * len(strategies)
-population = proportion_rep(N, proportions)
-
 results = numpy.array(proportions)
 
-#Runs all the games for a generation, returning a list of the total payoff per strategy.
-def run_generation(population):
+#Runs all the games for a generation, returning a list of the proportions in the following generation.
+def run_generation(proportions):
 	payoffs = [0] * len(strategies)
-	for i1, s1 in enumerate(population):
-		for i2, s2 in enumerate(population):
-			if i1 == i2:
-				continue #Each individual doesn't interact wwith itself.
-			payoff1, payoff2 = game(strategies[s1], strategies[s2])
-			payoffs[s1] += payoff1
-			payoffs[s2] += payoff2
+	for i1, proportion1 in enumerate(proportions):
+		for i2, proportion2 in enumerate(proportions):
+			for _ in range(parameters.runs_per_pair):
+				payoff1, payoff2 = game(strategies[i1], strategies[i2])
+				payoffs[i1] += payoff1 * proportion1 * proportion2
+				payoffs[i2] += payoff2 * proportion1 * proportion2
 	
-	return payoffs
+	proportions = [payoff / sum(payoffs) for payoff in payoffs]
+	return proportions
 
 #Run the evolution!
 generations = range(parameters.num_gen+1)
 for gen in generations[1:]:
 	print(f"Generation {gen}")
-	
-	payoffs = run_generation(population)
-	proportions = [payoff / sum(payoffs) for payoff in payoffs]
-	population = proportion_rep(N, proportions)
-	
+	proportions = run_generation(proportions)
 	results = numpy.vstack((results, numpy.array(proportions)))
 
 #Save the results to a csv.
