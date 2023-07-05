@@ -29,7 +29,7 @@ def game(strategy1, strategy2, normalise = True, return_moves = False):
 	p2_payoff = 0
 	while True:
 		p1_move = play(strategy1, p1_moves, p2_moves)
-		p2_move = play(strategy2, p1_moves, p2_moves)
+		p2_move = play(strategy2, p2_moves, p1_moves)
 		
 		p1_moves.append(p1_move)
 		p2_moves.append(p2_move)
