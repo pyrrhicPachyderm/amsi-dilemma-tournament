@@ -13,7 +13,7 @@ The payoff matrix is as follows:
 | **Defect**    | T,S       | P,P    |
 
 where T > R > P > S.
-Further, 2R > T + S (both players always cooperating is better than alternating cooperating and defecting.
+Further, 2R > T + S (both players always cooperating is better than alternating cooperating and defecting).
 The game is played at least once, and after each game is played again with probability 𝛿.
 
 For the duration of a single iterated game, algorithms will have access to all previous decisions by both players as part of that game, but not to any moves from any other games.
