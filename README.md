@@ -37,7 +37,7 @@ The tournament will run in an evolutionary manner, over several generations, whe
 In this way, the other strategies present will shift over time, and so the success of a strategy might change over time as its competition changes.
 
 Each strategy will begin the tournament with the same number of individuals alive, and the total number of individuals will remain the same across each generation.
-Every individual in a generation will play a game with every other individual in that generation, and will the payoff from each game will be summed to produce a total payoff.
+Every individual in a generation will play a game with every other individual in that generation, and the payoff from each game will be summed to produce a total payoff.
 The number of individuals of each strategy present in the next generation will be proportional to the total payoff acquired by all individuals of that strategy in the current generation.
 
 ## How to Compete
