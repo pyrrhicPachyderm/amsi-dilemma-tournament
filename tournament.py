@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import numpy
 import matplotlib.pyplot as plt
 from utils.load_strategies import load_strategies
@@ -7,7 +8,14 @@ from utils.game import game
 from utils.repeat import proportion_rep
 import utils.parameters as parameters
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--exclude-textbook", action = "store_true")
+args = parser.parse_args()
+
 strategies = list(load_strategies().values())
+
+if args.exclude_textbook:
+	strategies = [strategy for strategy in strategies if strategy.owner != "Textbook"]
 
 proportions = [1 / len(strategies)] * len(strategies)
 results = numpy.array(proportions)
