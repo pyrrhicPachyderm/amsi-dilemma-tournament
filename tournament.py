@@ -13,6 +13,7 @@ parser.add_argument("-t", "--exclude-textbook", action = "store_true")
 args = parser.parse_args()
 
 strategies = list(load_strategies().values())
+strategies.sort(key = lambda strategy: strategy.name) #Sort by name.
 
 if args.exclude_textbook:
 	strategies = [strategy for strategy in strategies if strategy.owner != "Textbook"]
