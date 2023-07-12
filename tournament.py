@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import math
 import numpy
 import matplotlib.pyplot as plt
 from utils.load_strategies import load_strategies
@@ -10,6 +11,7 @@ import utils.parameters as parameters
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--exclude-textbook", action = "store_true")
+parser.add_argument("-l", "--log-plot", action = "store_true")
 args = parser.parse_args()
 
 strategies = list(load_strategies().values())
@@ -52,12 +54,16 @@ numpy.savetxt("results.csv",
 
 #Show a plot of the results.
 for i in range(results.shape[1]):
-	plt.plot(generations, results[:,i], label = strategies[i].name)
+	ys = results[:,i]
+	if args.log_plot:
+		ys = [math.log(y) for y in ys]
+	plt.plot(generations, ys, label = strategies[i].name)
 
 plt.xlabel("Generation")
-plt.ylabel("Proportion of population")
+plt.ylabel("Log proportion of population" if args.log_plot else "Proportion of population")
 plt.xlim(min(generations), max(generations))
-plt.ylim(0, 1)
+if not args.log_plot:
+	plt.ylim(0, 1)
 plt.legend()
 
 plt.show()
