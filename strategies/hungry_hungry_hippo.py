@@ -2,15 +2,15 @@ name = "Hungry Hungry Hippo"
 owner = "Madhav"
 
 def play(p1_moves, p2_moves, T, R, P, S, delta):
-	# Selfhelp edge case
-	if p1_moves == p2_moves:
-		return True
 	# Testing phase: D C C
-	elif len(p2_moves) == 0:
+	if len(p2_moves) == 0:
 		return False
 	elif len(p2_moves) == 1:
 		return True
 	elif len(p2_moves) == 2:
+		return True
+	# Selfhelp edge case
+	elif p1_moves == p2_moves:
 		return True
 	# Immediate response phase: Diagnose opponent as one of the following.
 	# Rude: Turn 1 defect, turn 3 defect
@@ -21,7 +21,7 @@ def play(p1_moves, p2_moves, T, R, P, S, delta):
 	# Then perform the following response strategies:
 	# Rude || Weak || Angy: Always defect.
 	# Nice: Always C.
-	else:
+	elif len(p2_moves <= 10):
 		if(all(p2_moves) or not p2_moves[2]):
 			return False
 		else:
