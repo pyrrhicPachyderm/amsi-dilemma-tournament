@@ -21,7 +21,7 @@ def play(p1_moves, p2_moves, T, R, P, S, delta):
 	# Then perform the following response strategies:
 	# Rude || Weak || Angy: Always defect.
 	# Nice: Always C.
-	elif len(p2_moves <= 10):
+	elif len(p2_moves) <= 10:
 		if(all(p2_moves) or not p2_moves[2]):
 			return False
 		else:
