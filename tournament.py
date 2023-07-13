@@ -29,6 +29,7 @@ pairwise_payoffs = [[0] * len(strategies) for _ in range(len(strategies))]
 #Precalculate the pairwise payoffs:
 for i1,strategy1 in enumerate(strategies):
 	for i2,strategy2 in enumerate(strategies[0:i1+1]):
+		print(f"Precomputing {i1} vs {i2}")
 		for _ in range(parameters.runs_per_pair):
 			payoff1, payoff2 = game(strategy1, strategy2)
 			if i1 == i2:
@@ -51,7 +52,6 @@ def run_generation(proportions):
 #Run the evolution!
 generations = range(parameters.num_gen+1)
 for gen in generations[1:]:
-	print(f"Generation {gen}")
 	proportions = run_generation(proportions)
 	results = numpy.vstack((results, numpy.array(proportions)))
 
