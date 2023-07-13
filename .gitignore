@@ -1,2 +1,6 @@
 __pycache__
 *.csv
+
+rl/logs/*
+!rl/logs/.gitignore
+!rl/agent/.gitignore
