@@ -64,6 +64,9 @@ numpy.savetxt("results.csv",
 	comments = "",
 )
 
+#A longer set of colours for the plot:
+plt.rcParams['axes.prop_cycle'] = plt.cycler(color = ['blue', 'green', 'red', 'cyan', 'magenta', 'gold', 'black', 'purple', 'pink', 'brown', 'orange', 'teal', 'coral', 'lightblue', 'lime', 'lavender', 'turquoise', 'darkgreen', 'tan', 'salmon', 'yellow'])
+
 #Show a plot of the results.
 for i in range(results.shape[1]):
 	ys = results[:,i]
