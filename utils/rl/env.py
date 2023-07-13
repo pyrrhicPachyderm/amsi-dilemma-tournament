@@ -13,9 +13,11 @@ observation_space_size = math.ceil(math.log(overrun_chance, parameters.delta))
 strategies = load_strategies()
 
 def get_observation(p1_moves, p2_moves):
-	observation = np.array([[2] * observation_space_size, [2] * observation_space_size])
-	for i,moves in enumerate(zip(p1_moves, p2_moves)):
-		observation[0,i], observation[1,i] = (int(move) for move in moves)
+	observation = [2] * (2 * observation_space_size)
+	for i,move in enumerate(p1_moves):
+		observation[i] = int(move)
+	for i,move in enumerate(p1_moves):
+		observation[i + observation_space_size] = int(move)
 	return observation
 
 class DilemmaEnv(gym.Env):
@@ -28,7 +30,7 @@ class DilemmaEnv(gym.Env):
 		#Ideally, we should probably give it both the first N observations and the most recent M observations.
 		#Instead, we give it just the first N observations, and make N too big to ever overrun.
 		self.action_space = gym.spaces.Discrete(2) #Just two states.
-		self.observation_space = gym.spaces.MultiDiscrete(np.array([[3] * observation_space_size, [3] * observation_space_size]))
+		self.observation_space = gym.spaces.MultiDiscrete([3] * (2 * observation_space_size))
 		
 		#TODO: Set up an ecosystem of different strategies.
 		
