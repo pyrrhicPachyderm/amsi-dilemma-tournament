@@ -23,15 +23,27 @@ if args.exclude_textbook:
 proportions = [1 / len(strategies)] * len(strategies)
 results = numpy.array(proportions)
 
+#pairwise_payoffs[i][j] is the payoff of i against j
+pairwise_payoffs = [[0] * len(strategies) for _ in range(len(strategies))]
+
+#Precalculate the pairwise payoffs:
+for i1,strategy1 in enumerate(strategies):
+	for i2,strategy2 in enumerate(strategies[0:i1+1]):
+		for _ in range(parameters.runs_per_pair):
+			payoff1, payoff2 = game(strategy1, strategy2)
+			if i1 == i2:
+				pairwise_payoffs[i1][i2] += payoff1 #(payoff1 + payoff2) / 2
+			else:
+				pairwise_payoffs[i1][i2] += payoff1
+				pairwise_payoffs[i2][i1] += payoff2
+
 #Runs all the games for a generation, returning a list of the proportions in the following generation.
 def run_generation(proportions):
 	payoffs = [0] * len(strategies)
 	for i1, proportion1 in enumerate(proportions):
 		for i2, proportion2 in enumerate(proportions):
-			for _ in range(parameters.runs_per_pair):
-				payoff1, payoff2 = game(strategies[i1], strategies[i2])
-				payoffs[i1] += payoff1 * proportion1 * proportion2
-				payoffs[i2] += payoff2 * proportion1 * proportion2
+			payoffs[i1] += pairwise_payoffs[i1][i2] * proportion1 * proportion2
+			payoffs[i2] += pairwise_payoffs[i2][i1] * proportion1 * proportion2
 	
 	proportions = [payoff / sum(payoffs) for payoff in payoffs]
 	return proportions
