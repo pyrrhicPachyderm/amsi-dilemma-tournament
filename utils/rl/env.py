@@ -6,7 +6,7 @@ import gymnasium as gym
 import utils.parameters as parameters
 from utils.game import roll_game_length, play, payoff
 from utils.load_strategies import load_strategies
-from utils.rl.observe import observation_space_size, get_observation
+import utils.rl.observe as observe
 
 strategies = load_strategies()
 
@@ -14,13 +14,17 @@ class DilemmaEnv(gym.Env):
 	def __init__(self, config = None):
 		config = config or {}
 		
+		self.obs_n = config.get("obs_n", 1e6)
+		self.obs_m = config.get("obs_m", 0)
+		obs_size = observe.get_observation_size(self.obs_n, self.obs_n)
+		
 		#The action space will have two states: 0 is Defect, 1 is Cooperate.
 		#The observation space has three states: the above two, plus 2 is unobserved.
 		#The observation space must be of a fixed size, so we just make it *huge*.
 		#Ideally, we should probably give it both the first N observations and the most recent M observations.
 		#Instead, we give it just the first N observations, and make N too big to ever overrun.
 		self.action_space = gym.spaces.Discrete(2) #Just two states.
-		self.observation_space = gym.spaces.MultiDiscrete([3] * (2 * observation_space_size))
+		self.observation_space = gym.spaces.MultiDiscrete([3] * obs_size)
 		
 		#TODO: Set up an ecosystem of different strategies.
 		
@@ -36,6 +40,9 @@ class DilemmaEnv(gym.Env):
 		#TODO: Allow this to be weighted.
 		return random.choice(list(strategies.values()))
 	
+	def get_observation(self):
+		return observe.get_observation(self.p1_moves, self.p2_moves, self.obs_n, self.obs_m)
+	
 	def reset(self, opponent_id = None, opponent_name = None, seed = None, options = None):
 		super().reset(seed = seed)
 		
@@ -45,7 +52,7 @@ class DilemmaEnv(gym.Env):
 		self.p1_moves = []
 		self.p2_moves = []
 		
-		observation = get_observation(self.p1_moves, self.p2_moves)
+		observation = self.get_observation()
 		info = {}
 		
 		return observation, info
@@ -58,7 +65,7 @@ class DilemmaEnv(gym.Env):
 		self.p2_moves.append(p2_move)
 		self.game_num += 1
 		
-		observation = get_observation(self.p1_moves, self.p2_moves)
+		observation = self.get_observation()
 		reward = payoff(p1_move, p2_move) / self.game_length
 		terminated = self.game_num >= self.game_length
 		truncated = False
