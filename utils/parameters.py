@@ -7,4 +7,4 @@ delta = 0.99
 
 #Parameters for the evolutionary tournament
 runs_per_pair = 25 #The number of times to run each pair of strategies against one another
-num_gen = 40 #Number of generations
+num_gen = 300 #Number of generations
