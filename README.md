@@ -102,3 +102,29 @@ For this to work, some people are going to need to submit some nasty (as in, not
 I know we've learned all about how nice strategies are great, but if everyone submits only nice strategies, everything will cooperate all the time, and we'll never see any changes in the population.
 So we need some nasty strategies.
 Try and take advantage of the nice strategies other people will be submitting!
+
+## Reinforcement Learning
+
+To tie this in with the reinforcement learning module of the winter school, I wrote an environment for using reinforcement learning to train agents to play Prisoner's dilemma.
+The environment definition is in `utils/rl/environment.py`, and `train.py` contains a program to train agents using that environment and save them in `rl/agents/`.
+You can then add strategies into `strategies/` that load those trained agents and use them to play in the tournament.
+
+### Training an Agent
+
+`train.py` requires a few parameters: the name of the agent to save, then two integer parameters `n` and `m`.
+`n` and `m` define the set of moves shown to the agent to hep it make its decision.
+At each time step, it sees the first `n` moves of the game, and the most recent `m` moves.
+If you want to show it all the moves, just set `n` to something really huge (and `m` to zero); `utils/rl/observe.py` contains a utility function `calculate_size()` for taking a desired probability of a game overrunning `n` moves (using a certain value of 𝛿) and giving the required value of `n`.
+
+Currently, training uses curriculum learning, training the model against every strategy present in the `strategies` directory, including textbook , with equal probability.
+This could definitely be updated by changing `utils/rl/environment.py`.
+`train.py` also always uses an `ARS` model; this is easy enough to change, but I'd like to set it up to change with a command line argument.
+
+`tensorboard.sh` simply launches tensorboard with the correct log directory set.
+
+### Submitting a Strategy Using an Agent
+
+To submit a strategy using an agent, add your trained agent's zip file into the Git repository (forget that it's an intermediate product) and add a file to the `strategies` directory (as described above) that loads this agent and uses its `predict` method to decide upon moves.
+Feel free to use my `ars_all_opponents_20_20.py` as a template.
+Just make sure that your model type (e.g. `ARS`) and your observation parameters (`n` and `m`) match the model type and parameters that the model was trained with.
+Please don't submit *too* many RL strategies, as they're quite slow to run, but feel free to have some fun playing around with things!
