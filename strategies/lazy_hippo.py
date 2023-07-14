@@ -1,4 +1,4 @@
-name = "Hungry Hungry Hippo"
+name = "Lazy Hippo"
 owner = "Madhav"
 
 def play(p1_moves, p2_moves, T, R, P, S, delta):
