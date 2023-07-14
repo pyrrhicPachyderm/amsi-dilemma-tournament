@@ -10,7 +10,7 @@ def play(p1_moves, p2_moves, T, R, P, S, delta):
 		return True
 	# Immediate response phase: Only defect if opponent defects.
 	elif len(p2_moves) <= 10:
-		if(p2_moves[-1]):
+		if(all(p2_moves)):
 			return True
 		else:
 			return False
